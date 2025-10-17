@@ -18,7 +18,7 @@ void init_input(int len, char *arr) { // tao dau vao random
 		int random_number = (rand() % 9) + 1;
 
 		if (i == len - 1) {// tao so 1 o cuoi mang
-			random_number = 3; 
+			random_number = 1; 
 		}
 
 		fprintf(f, "%d", random_number);
@@ -120,15 +120,20 @@ int pow_2(char *arr, char* result) {
 	}
 
 	// arr * arr theo idx -> luu vao 1 mang temp
+// vd 345x345 -> 09 24 46 40 25
 	for (int i = len - 1; i >= 0; i--) {
 		int digit1 = arr[i] - '0';
 		for (int j = len - 1; j >= 0; j--) {
 			int digit2 = arr[j] - '0';
-			temp[i + j + 1] += digit1 * digit2;
+			temp[i + j + 1] += digit1*digit2;
 		}
 	}
 
+
 	// Xu ly temp tu cuoi mang len dau -> dung phep nhan co nho de tang bien truoc do
+// 09 24 46 40 25 -> lay /10 phep cuoi lam bien nho ->       119 02 5
+
+
 	for (int i = 2 * len - 1; i > 0; i--) {
 		temp[i - 1] += temp[i] / 10;
 		temp[i] %= 10;
