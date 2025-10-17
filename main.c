@@ -14,7 +14,7 @@ Output
 Return 
 	-None
 
-Desription: This fucnion create random number in string format ưith lenth equal to input len, write it to txt file
+Desription: This fucnion create random number in string format ưith length equal to input len, write it to txt file
 
 
 */
