@@ -3,7 +3,7 @@
 #include<string.h>
 #define LEN  10000
 
-/*
+/***************************************************************************************
 Funcion name: init_input()
 Input
 	- len: length  of number
@@ -16,8 +16,8 @@ Return
 
 Desription: This fucnion create random number in string format ưith length equal to input len, write it to txt file
 
+***************************************************************************************/
 
-*/
 
 void init_input(int len, char *arr) { // tao dau vao random
 	FILE* f = fopen("input.txt", "w");
@@ -45,7 +45,7 @@ void init_input(int len, char *arr) { // tao dau vao random
 	return;
 
 }	
-/*
+/***************************************************************************************
 Funcion name: print_output_txt()
 Input
 	- char *arr : string contain number in char format
@@ -57,7 +57,8 @@ Return
 
 Desription: This fucnion write input to txt file
 
-*/
+/****************************************************************************************/
+
 
 void print_output_txt(char* result) {
 	int len = strlen(result);
@@ -80,7 +81,7 @@ void print_output_txt(char* result) {
 	return;
 }
 
-/*
+/***************************************************************************************
 Funcion name: print_arr()
 Input
 	- char *s : string contain number in char format
@@ -92,7 +93,8 @@ Return
 
 Desription: This fucnion write input to terminal
 
-*/
+*************************************************************************************/
+
 void print_arr(char* s) {
 	printf("\n");
 	for (int i = 0; i < strlen(s); i++) {
@@ -102,7 +104,7 @@ void print_arr(char* s) {
 
 }
 
-/*
+/*********************************************************************** 
 Funcion name: add_1_and_div_2()
 Input
 	- char *arr : string contain number in char format
@@ -116,7 +118,7 @@ Return
 
 Desription:  This function calculates (n + 1) / 2 for a large number represented as a string.
 
-*/
+************************************************************************/
 void add_1_and_div_2(char* arr, char* result) {
 	int len = strlen(arr);
 	char temp[LEN + 2]; // gom (n + 1) ky tu
@@ -165,7 +167,7 @@ void add_1_and_div_2(char* arr, char* result) {
 }
 
 
-/*
+/***********************************************************************
 Funcion name: pow_2()
 Input
 	- char *arr : string contain number in char format
@@ -179,7 +181,7 @@ Return
 
 Desription:  This function calculates x^2 for a large number represented as a string.
 
-*/
+**********************************************************************/
 int pow_2(char *arr, char* result) {
 	int len = strlen(arr);
 	int* temp = (int*)calloc(2 * len, sizeof(int));
