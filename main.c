@@ -75,7 +75,8 @@ void add_1_and_div_2(char* arr, char* result) {
 	}
 	if (carry) { // them 1 o dau neu bi tran
 		memmove(temp + 1, temp, len + 1);
-		temp[0] = '1';
+		//temp[0] = '1';
+		temp[0] = carry + '0';
 		len++;
 	}
 
