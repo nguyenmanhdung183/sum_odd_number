@@ -1,13 +1,13 @@
-﻿#include<stdio.h>
+﻿#include <stdio.h>
 #include <stdlib.h>
-#include<string.h>
-#define LEN  10000
+#include <string.h>
+#define N 10000
+
 
 /***************************************************************************************
-Funcion name: init_input()
+Funcion name: make_input()
 Input
-	- len: length  of number
-	- char *arr : string contain number in char format
+	- None
 Output
 	- string is ininitialized
 
@@ -17,74 +17,101 @@ Return
 Desription: This fucnion create random number in string format ưith length equal to input len, write it to txt file
 
 ***************************************************************************************/
+void make_input()
+{
+
+    FILE *file;
+    file = fopen("input.txt", "w");
+    if(file == NULL){
+        printf("error\n");
+        exit(0);
+    }
 
 
-void init_input(int len, char *arr) { // tao dau vao random
-	FILE* f = fopen("input.txt", "w");
-	if (f == NULL) {
-		printf("error");
-		return;
-	} 
+    srand(time(NULL));
 
-	srand(time(NULL));
-
-	int i = 0;
-	for (i = 0; i < len; i++) {
-		int random_number = (rand() % 9) + 1;
-
-		if (i == len - 1) {// tao so 1 o cuoi mang
-			random_number = 1; 
-		}
-
-		fprintf(f, "%d", random_number);
-		arr[i] = '0'+random_number;
-	}
+    for (int i = 0; i < N; i++)
+    {
+        if (i == N - 1)
+        {
+            fprintf(file, "%d", 1);
+            break;
+        }
+        fprintf(file, "%d", (rand() % 9) + 1);
+    }
+    fclose(file);
+    return;
+}
 
 
-	fclose(f);
-	return;
-
-}	
 /***************************************************************************************
-Funcion name: print_output_txt()
+Funcion name: read_input()
 Input
-	- char *arr : string contain number in char format
+	- char *a : string contain number in char format
 Output
-	- None
+	- string is ininitialized
 
 Return 
 	-None
 
-Desription: This fucnion write input to txt file
+Desription: This fucnion read input from txt
+***************************************************************************************/
+void read_input(char *a)
+{
 
-/****************************************************************************************/
+    FILE *file;
+    file = fopen("input.txt", "r");
+    if(file == NULL){
+        printf("error\n");
+        exit(0);
+    }
 
+    int count = 0;
+    int i = 0;
+    while (EOF != fscanf(file, "%c", &a[i++]))
+    {
+        count++;
+    }
 
-void print_output_txt(char* result) {
-	int len = strlen(result);
-	//printf("len pot = %d", len);
-	FILE* f = fopen("output.txt", "w");
-	if (f == NULL) {
-		printf("error");
-		return;
-	}
+    printf("count = %d\n", count);
+    a[N + 1] = '\0';
+    fclose(file);
 
+    return;
+}
 
-	int i = 0;
-	for (i = 0; i < len; i++) {
+/***************************************************************************************
+Funcion name: read_input()
+Input
+	- char *a : string contain number in char format
+Output
+	- string is ininitialized
 
-		fprintf(f, "%d", result[i] -'0');
-	}
+Return 
+	-None
 
+Desription: This fucnion print ouput to txt
+***************************************************************************************/
+void print_ouput_txt(char *a){
+        FILE *file;
+    file = fopen("out.txt", "w");
+        if(file == NULL){
+        printf("error\n");
+        exit(0);
+    }
 
-	fclose(f);
-	return;
+    fprintf(file, "%s", a);
+
+    fclose(file);
+
+    return;
+
 }
 
 /***************************************************************************************
 Funcion name: print_arr()
 Input
-	- char *s : string contain number in char format
+	- char *arr : string contain number in char format
 Output
 	- None
 
@@ -94,21 +121,18 @@ Return
 Desription: This fucnion write input to terminal
 
 *************************************************************************************/
+void print_arr(char *arr)
+{
 
-void print_arr(char* s) {
-	printf("\n");
-	for (int i = 0; i < strlen(s); i++) {
-		printf("%d", s[i] - '0');
-	}
-		printf("\n");
-
+    printf("\nprint_arr\n%s\n", arr);
+    return;
 }
 
 /*********************************************************************** 
-Funcion name: add_1_and_div_2()
+Funcion name: add_1()
 Input
 	- char *arr : string contain number in char format
-	- char *result :output string to store new result
+	- char *arr1 :output string to store new result
 
 Output
 	- result: output string to store the result
@@ -116,61 +140,113 @@ Output
 Return 
 	-None
 
-Desription:  This function calculates (n + 1) / 2 for a large number represented as a string.
+Desription:  This function calculates (n + 1)  for a large number represented as a string.
 
 ************************************************************************/
-void add_1_and_div_2(char* arr, char* result) {
-	int len = strlen(arr);
-	char temp[LEN + 2]; // gom (n + 1) ky tu
-	strcpy(temp, arr);
+void add_1(char *arr2, char *arr1)
+{
 
-//add
-	int carry = 0;
-	int add_number = 1;
-	for(int i=len -1; i>=0;i--){
-		int sum = temp[i] -'0' + add_number+carry;
-		add_number =0;
-		carry = sum/10;
-		temp[i] = sum%10 + '0';
+    strcpy(arr2, arr1);
 
-		if(!carry) {
-		break;
-		}
-	}
+    int len = strlen(arr2);
+    // printf("len arr2 = %d\n", strlen(arr2));
 
-	if (carry) {
-		memmove(temp + 1, temp, len + 1);
-		//temp[0] = '1';
-		temp[0] = carry + '0';
-		len++;
-	}
+    printf("\n------\n");
+    print_arr(arr2);
+    int carry = 0;
+    int add_value = 1;
+    for (int i = len - 1; i >= 0; i--)
+    {
+        // print_arr(arr2);
+        int sum = arr2[i] - '0' + add_value + carry;
+        // printf("\nsum = %d\n", sum);
+        add_value = 0;
+        if (sum > 9)
+        {
+            carry = 1;
+            arr2[i] = (sum % 10) + '0';
+        }
+        else
+        {
+            carry = 0;
+            arr2[i] = sum + '0';
+            break;
+        }
+    }
 
-	print_arr(temp);
+    if (carry)
+    {
+        memmove(arr2 + 1, arr2, strlen(arr2) + 1);
+        arr2[0] = '1';
+    }
 
-	//div2
-	int j = 0;
-	int du = 0;
-	for (int i = 0; i < len; i++) {
-		int cur = du * 10 + (temp[i] - '0');
-		result[j++] = (cur / 2) + '0';
-		du = cur % 2;
-	}
-	result[j] = '\0';
+    print_arr(arr2);
 
-	// xoa so 0 o dau neu truong hop arr[0] <2
-	int k = 0;
-	while (result[k] == '0' && result[k + 1] != '\0') k++;
-	if (k > 0) memmove(result, result + k, strlen(result + k) + 1);
+    return;
+}
 
 
-	return;
+/*********************************************************************** 
+Funcion name: div_2()
+Input
+	- char *a : string contain number in char format
+Output
+	- result: output string to store the result
+
+Return 
+	-None
+
+Desription:  This function calculates x  / 2 for a large number represented as a string.
+
+************************************************************************/
+
+void div_2(char *a)
+{
+    int len = strlen(a);
+    // char *arr1 = (char *)malloc(len * sizeof(char)); // luu update a
+    char *arr2 = (char *)malloc(len * sizeof(char)); // luu ket qua
+
+    if ((arr2 == NULL))
+    {
+        printf("error malloc div2");
+        exit(0);
+    }
+
+    int thuong;
+    int du;
+    int so_chia = 2;
+    // strcpy(arr1, a);
+    int idx_arr2 = 0;
+
+    int so_du = 0;
+    for (int i = 0; i < len; i++)
+    {
+        int temp = so_du * 10 + a[i] - '0';
+        arr2[idx_arr2++] = (temp / 2) + '0';
+        so_du = temp % 2;
+    }
+
+    arr2[idx_arr2] = '\0';
+
+    // xoa 0 o dau
+    for (int i = 0; i < strlen(arr2); i++)
+    {
+        if (arr2[i] == '0' && arr2[i + 1] != '0')
+        {
+            memmove(arr2, arr2 + i + 1, strlen(arr2 - i));
+            break;
+        }
+    }
+    strcpy(a, arr2);
+    print_arr(arr2);
+    return;
 }
 
 
 /***********************************************************************
 Funcion name: pow_2()
 Input
-	- char *arr : string contain number in char format
+	- char *a : string contain number in char format
 	- char *result :output string to store new result
 
 Output
@@ -182,71 +258,86 @@ Return
 Desription:  This function calculates x^2 for a large number represented as a string.
 
 **********************************************************************/
-int pow_2(char *arr, char* result) {
-	int len = strlen(arr);
-	int* temp = (int*)calloc(2 * len, sizeof(int));
-	if (!temp) {
-		printf("error calloc\n");
-		exit(1);
-	}
+void pow_2(char *a, char *result)
+{
+    printf("--pow--\n");
 
-	// arr * arr theo idx -> luu vao 1 mang temp
-// vd 345x345 -> 09 24 46 40 25
-	for (int i = len - 1; i >= 0; i--) {
-		int digit1 = arr[i] - '0';
-		for (int j = len - 1; j >= 0; j--) {
-			int digit2 = arr[j] - '0';
-			temp[i + j + 1] += digit1*digit2;
-		}
-	}
+    //strcpy(a, "123");
+    int len_a = strlen(a);
+    int * result_int = (int *) calloc(len_a*2, sizeof(int));
 
 
-	// Xu ly temp tu cuoi mang len dau -> dung phep nhan co nho de tang bien truoc do
-// 09 24 46 40 25 -> lay /10 phep cuoi lam bien nho ->       119 02 5
+
+    //printf("result len = %d", strlen(a));
+    //print_arr(result);
+    int idx_result = len_a*2-1;
+    for (int i = len_a - 1; i >= 0; i--)
+    {
+        for (int j = len_a - 1; j >= 0; j--)
+        {
+            result_int[i+j+1] += (a[i]-'0')*(a[j]-'0');
+            //printf("\nresult %d = %d", i+j+1, result_int[i+j+1]);
+        }
+
+    }
 
 
-	for (int i = 2 * len - 1; i > 0; i--) {
-		temp[i - 1] += temp[i] / 10;
-		temp[i] %= 10;
-	}
+    result[len_a*2] ='\0';
+    for(int i=len_a*2-1;i>0;i--){
 
-	// chuyen tu mang int  sang char
-	int start = 0;
-	if (temp[0] == 0) start = 1;  //bo qua so 0 o dau neu co
+        result_int[i-1] += result_int[i]/10;
+        result_int[i] %=10;       
+    }
 
-	for (int i = start; i < 2 * len; i++) {
-		result[i - start] = temp[i] + '0';
-	}
-	result[2 * len - start] = '\0';
-	//print_arr(result);
+    for(int i=0;i< len_a*2;i++){
+        result[i] = result_int[i] +'0';
+    }
 
-	free(temp);
 
-	return 0;
+    for (int i = 0; i <= len_a*2; i++)
+    {
+        if (result[i] == '0' && result[i + 1] != '0')
+        {
+            memmove(result, result + i + 1, strlen(result - i));
+            break;
+        }
+    }
+
+    //print_arr(result);
+
+
+    //print_arr(result);
+
+
+    return;
 }
 
-int main() {
-	char arr[LEN+1] = { '0' };
-	char result_1[LEN + 2] = { '0' };
-	char resul_2[2*(LEN + 2)] = { '0' };
+int main()
+{
+
+    char arr[N + 1];
+    char arr2[N + 2];
+    char arr3[(N + 2) * 2] ={'0'};
 
 
-	init_input(LEN, arr);
+    make_input();
 
-	//strcpy(arr, "5");
-
-	//so le -> result = (((n+1)/2)^2) 
-
-	add_1_and_div_2(arr, result_1); // tinh (n+1)/2
-
-	pow_2(result_1, resul_2);  //tinh binh phuong
+    read_input(arr);
+    // print_arr(arr);
 
 
-	printf("\n\nresult \n\n");
-	//print_arr(resul_2);
-	printf("\n");
+   // strcpy(arr, "21");
 
-	print_output_txt(resul_2);
+    add_1(arr2, arr);
 
-	return 0;
+    div_2(arr2);
+    print_arr(arr2);
+
+    pow_2(arr2, arr3);
+
+    print_ouput_txt(arr3);
+    printf("\n\nresulr\n\n");
+    printf("%s\n", arr3);
+
+    return 0;
 }
