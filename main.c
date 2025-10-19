@@ -9,7 +9,7 @@ Funcion name: make_input()
 Input
 	- None
 Output
-	- string is ininitialized
+	- None
 
 Return 
 	-None
@@ -49,7 +49,7 @@ Funcion name: read_input()
 Input
 	- char *a : string contain number in char format
 Output
-	- string is ininitialized
+	- string is read from txt
 
 Return 
 	-None
