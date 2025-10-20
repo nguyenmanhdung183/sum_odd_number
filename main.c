@@ -323,7 +323,7 @@ int main()
 
     char arr[N + 1];
     char arr2[N + 2];
-    char arr3[(N + 2) * 2] ={'0'};
+    char arr3[(N + 2) * 2];
 
 
     make_input();
