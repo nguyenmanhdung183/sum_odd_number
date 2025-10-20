@@ -1,0 +1,5 @@
+Em gửi kết quả chấm:
+1. Lỗi nếu giá trị N nhập vào = 0 ( do dùng hàm make input nên đầu vào luôn đúng)
+2. ⁠Lỗi trong hàm xử lý xoá số 0. Lỗi trong trường hợp có nhiều số 0 phía trước ví dụ 00011.
+3. ⁠In ra kết quả sai khi giá trị N = số full 9 (9999…..99) 1000 chữ số 9, 5000 chữ số 9, 10000 chữ số 9.
+Kết quả đạt khoảng 70-80%

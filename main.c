@@ -5,6 +5,68 @@
 
 
 /***************************************************************************************
+Funcion name: origin_method()
+Input
+	- int a : input number with type int
+Output
+	- None
+
+Return 
+	-None
+
+Desription: This fucnion calculate the result by math method
+
+***************************************************************************************/
+
+void origin_method(int a){
+    if(a < 0){
+        printf("error\n");
+        exit(0);
+    }
+    if(!(a&1)){
+        printf("input is not odd\n");
+        exit(0);
+    }
+
+    long long half = (a + 1LL) / 2;
+    long long b = half * half;
+
+
+    printf("result caculate by math = %lld\n", b);
+    return 0;
+}
+
+/***************************************************************************************
+Funcion name: clean_input()
+Input
+	- char *input : string contain number in char format
+Output
+	- None
+
+Return 
+	-None
+
+Desription: This fucnion clean input by removing leading zeros
+***************************************************************************************/
+
+void clean_input(char* input){
+    int len = strlen(input);
+    printf("len before clean = %d\n", len);
+    // xoa 0 o dau
+    for (int i = 0; i < len; i++)
+    {
+        if (input[i] == '0' && input[i + 1] != '0')
+        {
+            memmove(input, input + i + 1, len-i+1);
+
+            break;
+        }
+    }
+
+    printf("len after clean = %d\n", strlen(input));
+    return ;
+}
+/***************************************************************************************
 Funcion name: make_input()
 Input
 	- None
@@ -27,7 +89,7 @@ void make_input()
         exit(0);
     }
 
-
+#if 0 // tao random
     srand(time(NULL));
 
     for (int i = 0; i < N; i++)
@@ -39,10 +101,34 @@ void make_input()
         }
         fprintf(file, "%d", (rand() % 9) + 1);
     }
+#else // tao full 9
+    for(int i=0;i<N;i++){
+        fprintf(file, "%d", 9);
+    }
+#endif
+
     fclose(file);
     return;
 }
 
+void check_input(char* input){
+    int len = strlen(input);
+    printf("len = %d\n", len);
+    if(!len){
+        printf("input is empty\n");
+        exit(0);
+    }
+
+    if(!(input[len-1] & 1)){
+        printf("input is not odd\n");
+        exit(0);
+    }
+
+
+
+
+    return;
+}
 
 /***************************************************************************************
 Funcion name: read_input()
@@ -269,13 +355,17 @@ void pow_2(char *a, char *result)
 
     //strcpy(a, "123");
     int len_a = strlen(a);
+    printf("len_a_pow2 = %d\n", len_a);
     int * result_int = (int *) calloc(len_a*2, sizeof(int));
 
-
+    if(result_int == NULL){
+        printf("error malloc pow2\n");
+        exit(0);
+    }
 
     //printf("result len = %d", strlen(a));
     //print_arr(result);
-    int idx_result = len_a*2-1;
+
     for (int i = len_a - 1; i >= 0; i--)
     {
         for (int j = len_a - 1; j >= 0; j--)
@@ -283,8 +373,8 @@ void pow_2(char *a, char *result)
             result_int[i+j+1] += (a[i]-'0')*(a[j]-'0');
             //printf("\nresult %d = %d", i+j+1, result_int[i+j+1]);
         }
-
     }
+
 
 
     result[len_a*2] ='\0';
@@ -294,32 +384,38 @@ void pow_2(char *a, char *result)
         result_int[i] %=10;       
     }
 
-    for(int i=0;i< len_a*2;i++){
-        result[i] = result_int[i] +'0';
+
+    // for(int i=0;i< len_a*2;i++){
+    //     result[i] = result_int[i] +'0';
+    // }
+
+
+    int start = 0;
+    while (start < len_a * 2 - 1 && result_int[start] == 0) {
+        start++;
     }
 
 
-    for (int i = 0; i <= len_a*2; i++)
-    {
-        if (result[i] == '0' && result[i + 1] != '0')
-        {
-            memmove(result, result + i + 1, strlen(result - i));
-            break;
-        }
+    int idx = 0;
+    for (int i = start; i < len_a * 2; i++) {
+        result[idx++] = result_int[i] + '0';
     }
+    result[idx] = '\0';
 
-    //print_arr(result);
 
-
-    //print_arr(result);
-free(result_int);
-result_int= NULL;
+    free(result_int);
+    result_int= NULL;
 
     return;
 }
 
 int main()
 {
+
+    if(N<=0){
+        printf("N must be positive\n");
+        exit(0);
+    }
 
     char arr[N + 1];
     char arr2[N + 2];
@@ -329,7 +425,8 @@ int main()
     make_input();
 
     read_input(arr);
-    // print_arr(arr);
+    clean_input(arr);
+    check_input(arr);
 
 
    // strcpy(arr, "21");
@@ -345,5 +442,7 @@ int main()
     printf("\n\nresulr\n\n");
     printf("%s\n", arr3);
 
+
+    //origin_method(999999999);
     return 0;
 }
