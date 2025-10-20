@@ -238,7 +238,12 @@ void div_2(char *a)
         }
     }
     strcpy(a, arr2);
+
     print_arr(arr2);
+
+
+    free(arr2);
+    arr2 = NULL;
     return;
 }
 
@@ -307,7 +312,8 @@ void pow_2(char *a, char *result)
 
 
     //print_arr(result);
-
+free(result_int);
+result_int= NULL;
 
     return;
 }
